@@ -7,15 +7,16 @@ import 'package:meta/meta.dart';
 class FilePicker {
   static const MethodChannel _channel = const MethodChannel('file_picker');
 
-  static Future<String> get _getPDF async => await _channel.invokeMethod('pickPDF');
-
-  static Future<String> _getImage(ImageSource type) async {
-    var image = await ImagePicker.pickImage(source: type);
-
-    return image?.path;
+  static Future<File> get _getPDF async {
+    var path = await _channel.invokeMethod('pickPDF');
+    return path == null ? null : new File(path);
   }
 
-  static Future<String> getFilePath({@required FileType type}) async {
+  static Future<File> _getImage(ImageSource type) async {
+    return await ImagePicker.pickImage(source: type);
+  }
+
+  static Future<File> getFilePath({@required FileType type}) async {
     switch (type) {
       case FileType.PDF:
         return _getPDF;
@@ -24,7 +25,7 @@ class FilePicker {
       case FileType.CAPTURE:
         return _getImage(ImageSource.camera);
     }
-    return '';
+    return null;
   }
 }
 
