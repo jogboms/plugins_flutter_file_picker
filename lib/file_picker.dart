@@ -1,8 +1,9 @@
-import 'dart:async';
+import 'dart:async' show Future;
+import 'dart:io' show File;
 
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/services.dart' show MethodChannel;
+import 'package:image_picker/image_picker.dart' show ImagePicker, ImageSource;
+import 'package:meta/meta.dart' show required;
 
 class FilePicker {
   static const MethodChannel _channel = const MethodChannel('file_picker');
